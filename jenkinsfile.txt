@@ -1,0 +1,32 @@
+node(){
+   try{
+		def stageArray = prepareStages();
+		executeBuild(stageArray); 
+   }finally{  
+		deleteDir(); 
+		/* auditPipelineInfo(); */
+		
+	}
+}
+def executeBuild(stageArray) {
+		try{
+			def gitRepo = "https://github.com/UshaKalluri/PipelineProp";
+			def gitBranch = "${repoBranchName}";
+			
+			stage(_stageCheckout){
+				try{
+
+						bat "git init"
+						bat "git config --add core.longpaths true"
+						bat " java -version"
+					git([url:  gitRepo , branch: gitBranch ])
+			
+					println "Completed checkout";
+					stageArray.put('Checkout', 'Success');
+					}
+				   catch(Exception e){
+					stageArray.put('Checkout', 'Failure');
+					println "Check out failed!!!";
+					throw e;
+					}	
+				}

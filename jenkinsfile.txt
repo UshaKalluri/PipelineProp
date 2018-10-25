@@ -24,9 +24,11 @@ def executeBuild(stageArray) {
 					println "Completed checkout";
 					stageArray.put('Checkout', 'Success');
 					}
-				   catch(Exception e){
+				   	catch(Exception e){
 					stageArray.put('Checkout', 'Failure');
 					println "Check out failed!!!";
 					throw e;
 					}	
-				}
+				   }
+		}catch(Exception e){throw e;}
+}
